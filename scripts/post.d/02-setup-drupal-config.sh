@@ -8,7 +8,7 @@ cp /var/www/drupal/sites/default/default.settings.php /var/www/drupal/sites/defa
 passwd=`pwgen 10 1`
 else
 # use existing password
-passwd=`cat /var/www/wordpress/wp-config.php | grep DB_PASSWORD | awk -F "'" '{print $4}'`
+passwd=`cat /var/www/drupal/sites/default/settings.php | grep DB_PASSWORD | awk -F "'" '{print $4}'`
 fi
 
 ## Set up permissions
@@ -18,19 +18,23 @@ chmod a+w /var/www/drupal/sites/default
 
 ## Set password in config file
 
-new_array="array(
-		'driver' => 'mysql',
-		'database' => 'bootstrapdrupal',
-		'username' => 'bootstrap_user',
-		'password' => '${passwd}',
-		'host' => 'localhost',
-		'port' => 3306,
-		'prefix' => 'c4bs_',
-		'collation' => 'utf8_general_ci',
-		);"
+new_array="\$databases = array (
+  'default' =>
+  array (
+    'default' =>
+    array (
+      'database' => 'bootstrapdrupal',
+      'username' => 'bootstrap_user',
+      'password' => '$passwd',
+      'host' => 'localhost',
+      'port' => '',
+      'driver' => 'mysql',
+      'prefix' => '',
+    ),
+  ),
+);"
 
-
-sed -i s/array()/${new_array}/ /var/www/drupal/sites/default/settings.php
+sed -i s/TESTING/"`echo $new_array`"/ /var/www/drupal/sites/default/settings.php
 
 # set the db up
 

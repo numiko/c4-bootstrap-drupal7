@@ -1,0 +1,16 @@
+<VirtualHost *:8080>
+
+ ServerAdmin info@yoursite.com
+
+ DocumentRoot /var/www/drupal/
+ ErrorLog /var/log/apache2/drupal-error.log
+ CustomLog /var/log/apache2/drupal-access.log combined
+
+ <Directory /var/www/drupal/>
+  AllowOverride All
+  Order Deny,Allow
+  Allow from all
+ </Directory>
+
+
+</VirtualHost>

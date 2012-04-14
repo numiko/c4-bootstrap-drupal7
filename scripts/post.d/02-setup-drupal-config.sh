@@ -18,7 +18,7 @@ chmod a+w /var/www/drupal/sites/default
 
 ## Set password in config file
 
-new_array="\$databases = array (
+new_array="array (
   'default' =>
   array (
     'default' =>
@@ -34,7 +34,7 @@ new_array="\$databases = array (
   ),
 );"
 
-sed -i s/TESTING/"`echo $new_array`"/ /var/www/drupal/sites/default/settings.php
+sed -i s/array\(\)/"`echo $new_array`"/ /var/www/drupal/sites/default/settings.php
 
 # set the db up
 

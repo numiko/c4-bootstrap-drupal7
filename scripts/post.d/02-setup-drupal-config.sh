@@ -8,7 +8,7 @@ cp /var/www/drupal/sites/default/default.settings.php /var/www/drupal/sites/defa
 passwd=`pwgen 10 1`
 else
 # use existing password
-passwd=`cat /var/www/drupal/sites/default/settings.php | grep DB_PASSWORD | awk -F "'" '{print $4}'`
+passwd=`cat /var/www/drupal/sites/default/settings.php | grep array | grep password | awk -F "," '{ print $3 }' | awk -F "'" '{ print $4 }'`
 fi
 
 ## Set up permissions
@@ -46,6 +46,6 @@ mysqladmin -u root flush-privileges
 
 if [ -f /var/tmp/sql/00-bootstrapdrupal.sql ];
 then
-    mysql -u root -D bootstrapwp < /var/tmp/sql/00-bootstrapdrupal.sql
+    mysql -u root -D bootstrapdrupal < /var/tmp/sql/00-bootstrapdrupal.sql
 fi
 
